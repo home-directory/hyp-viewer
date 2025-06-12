@@ -1,41 +1,97 @@
-# 3e
+# HYP Viewer
 
-Next level 3d workflow inside VSCode.
-
-![Screen record](assets/screen-record.gif)
-
-🎺 This project is not intended to modify 3d objects; like modeling, texturing, UV-unwrapping, etc. It's only a viewer with other helper features so you don't need to open other software (like Blender, etc.) to debug.
-
-[Install from VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=degreat.3e)
+A VS Code extension for viewing and editing Hyperfy `.hyp` files.
 
 ## Features
 
-- Export to JSX (using [gltfjsx](https://github.com/pmndrs/gltfjsx))
-- Look dev (with NormalMaterial, Basic Material and Textured) + HDRIs
-- Wireframe mode
-- Scene outliner
+- **View .hyp files**: Parse and display the binary .hyp file format used by Hyperfy
+- **Blueprint Editor**: Edit the JSON blueprint configuration with syntax highlighting
+- **Asset Management**: View all embedded assets with type, size, and MIME information
+- **3D Model Preview**: Preview .glb, .vrm, and other 3D models directly in VS Code using model-viewer
+- **Script Preview**: View embedded JavaScript files with syntax highlighting
+- **Save & Export**: Save changes back to the original file or export to a new location
 
-## Todo
+## HYP File Format
 
-- [x] Restore zoom and position on reopen
-- [ ] Camera config (far, near, fov)
-- [ ] Settings (default material color, roughness, etc., camera settings, default components path (relative) etc.)
-- [ ] Wireframe config panel
-- [ ] Material and environment config panels
-- [ ] Outliner-Viewer selection sync
-- [x] Animation player
-- [ ] GLTF formats
-- [ ] FBX/OBJ formats?
-- [ ] Custom HDR
-- [ ] Light theme experience*
-- [ ] Export to JSX options
+The `.hyp` format is a custom binary format with the following structure:
 
-> Create an issue for feature request
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Header Size (4 bytes, little-endian uint32)                │
+├─────────────────────────────────────────────────────────────┤
+│ JSON Header (contains blueprint + asset metadata)          │
+├─────────────────────────────────────────────────────────────┤
+│ Asset Data (binary data for each asset, concatenated)      │
+└─────────────────────────────────────────────────────────────┘
+```
 
-## Philosophy
+### JSON Header Format
 
-When getting into WebGL (or graphics development), the barrier is too high and thick: you need to know how to use a number of software (Blender, Substance Painter, etc.), understand some jargons/concepts (UV unwrapping, shaders, GLBs/FBX/etc.) and be ready to fail a lot on very trivial things.
+```json
+{
+  "blueprint": {
+    "name": "string",
+    "model": "string (optional)",
+    "script": "string (optional)", 
+    "props": {
+      "[key]": { "type": "string", "url": "string" }
+    },
+    "frozen": boolean
+  },
+  "assets": [
+    {
+      "type": "model" | "avatar" | "script",
+      "url": "string",
+      "size": number,
+      "mime": "string"
+    }
+  ]
+}
+```
 
-> I'm not dismissing that things take time to learn. I'm advocating that we make things easier to learn. No benefit is lost.
+## Usage
 
-If we can start building [creative/developer] experiences that ease beginner introductions, we'll notice a flood of creative ideas and output. This is evident in the space of frontend development with React, etc. and backend development with Node, etc.
+1. **Open .hyp files**: Right-click on any `.hyp` file and select "Open with HYP Viewer"
+2. **Edit Blueprint**: Modify the JSON blueprint in the left panel
+3. **Preview Assets**: Click "Preview" on any asset to view it in the right panel
+4. **Save Changes**: Use the "Save" button to save changes or "Export As..." to save to a new location
+
+## Supported Asset Types
+
+- **Models**: .glb, .gltf, .vrm (with 3D preview)
+- **Scripts**: .js files (with syntax highlighting)
+- **Avatars**: .vrm files (with 3D preview)
+
+## Development
+
+```bash
+# Install dependencies
+yarn install
+
+# Compile TypeScript
+yarn compile
+
+# Watch for changes
+yarn watch
+
+# Package extension
+yarn vscode:prepublish
+```
+
+## Requirements
+
+- VS Code 1.80.0 or higher
+- Modern browser support for model-viewer (for 3D previews)
+
+## Known Issues
+
+- Large asset previews may take time to load
+- Very large .hyp files (>100MB) may cause performance issues
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+## License
+
+MIT License - see LICENSE file for details.

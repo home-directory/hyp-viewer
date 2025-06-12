@@ -1,28 +1,31 @@
-# Change Log
+# Changelog
 
-All notable changes to the "3e" extension will be documented in this file.
+All notable changes to the HYP Viewer extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.1.0] - 2024-06-07
 
-## [0.0.6] - 26 July 2023
+### Added
+- Initial release of HYP Viewer extension
+- Support for parsing and viewing .hyp binary files
+- Blueprint JSON editor with syntax highlighting
+- Asset management panel showing type, size, and MIME information
+- 3D model preview using model-viewer for .glb, .gltf, and .vrm files
+- Script preview with syntax highlighting for JavaScript files
+- Save and export functionality for modified .hyp files
+- Context menu integration: "Open with HYP Viewer"
+- Binary format parser and serializer for .hyp files
+- Support for Hyperfy blueprint format with props and metadata
 
-- Restore appearance state on load.
+### Features
+- **File Format Support**: Complete .hyp binary format parsing
+- **Visual Editor**: Split-pane interface with blueprint editor and asset browser
+- **3D Preview**: Integrated model-viewer for 3D assets
+- **Asset Management**: View all embedded assets with metadata
+- **Export Capability**: Save changes or export to new files
 
-## [0.0.5] - 20 July 2023
-
-- Animations. You can select tracks to play.
-
-## [0.0.4] - 19 July 2023
-
-- Move away from manually managing scene objects
-- Show more items in outliner
-- Prevent unnecessary re-renders caused from interval state saves
-
-## [0.0.3] - 19 July 2023
-
-- Sort outline
-- Restore camera zoom and rotation on reopen
-
-## [0.0.2] - 18 July 2023
-
-- Initial release
+### Technical Details
+- Custom text editor provider for .hyp files
+- WebView-based UI with VS Code theming
+- TypeScript implementation with full type safety
+- Modular parser architecture
+- Base64 asset serialization for WebView communication

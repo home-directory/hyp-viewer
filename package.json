@@ -1,46 +1,51 @@
 {
-  "name": "3e",
-  "displayName": "3e",
-  "description": "Next level 3d workflow inside vscode",
-  "publisher": "degreat",
-  "icon": "assets/3e.png",
-  "repository": "https://github.com/blackmann/3e",
-  "version": "0.0.7",
+  "name": "hyp-viewer",
+  "displayName": "HYP Viewer",
+  "description": "View and edit Hyperfy .hyp files in VS Code",
+  "publisher": "hyperfy",
+  "icon": "assets/hyp.png",
+  "repository": "https://github.com/home-directory/hyp-viewer",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Visualization"
+    "Visualization",
+    "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCustomEditor:hyp-viewer.editor"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "customEditors": [
       {
-        "viewType": "3e.editor",
-        "displayName": "3e",
+        "viewType": "hyp-viewer.editor",
+        "displayName": "HYP Viewer",
         "selector": [
           {
-            "filenamePattern": "*.glb"
+            "filenamePattern": "*.hyp"
           }
         ],
         "priority": "default"
       }
     ],
-    "views": {
-      "explorer": [
+    "commands": [
+      {
+        "command": "hyp-viewer.openWithViewer",
+        "title": "Open with HYP Viewer",
+        "category": "HYP"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
         {
-          "id": "3e.outline",
-          "name": "3e Outline"
+          "command": "hyp-viewer.openWithViewer",
+          "when": "resourceExtname == .hyp",
+          "group": "navigation"
         }
       ]
-    },
-    "viewsWelcome": [
-      {
-        "view": "3e.outline",
-        "contents": "Open a GLB file or select a tab with one opened"
-      }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
@@ -84,5 +89,6 @@
     "react-dom": "^18.2.0",
     "three": "^0.152.2",
     "three-stdlib": "^2.23.13"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
